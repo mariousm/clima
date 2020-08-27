@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+// Interfaces
 import { IBusqueda } from "../interfaces/IBusqueda";
 
-const Formulario = () => {
-  // Definimos el state
-  const [busqueda, guardarBusqueda] = useState<IBusqueda>({
-    ciudad: "",
-    pais: "",
-  });
+// Definimos la interfaz para los props
+interface IFormularioProps {
+  busqueda: IBusqueda;
+  guardarBusqueda: React.Dispatch<React.SetStateAction<IBusqueda>>;
+  guardarConsultar: React.Dispatch<React.SetStateAction<boolean>>
+}
 
+const Formulario = ({ busqueda, guardarBusqueda, guardarConsultar }: IFormularioProps) => {
   const [error, guardarError] = useState<boolean>(false);
 
   // Extraer los valores
@@ -33,12 +35,15 @@ const Formulario = () => {
     guardarError(false);
 
     // Pasar al componente principal
+    guardarConsultar(true);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       {error ? (
-        <p className="red bg-darken-4 error">Todos los campos son obligatorios</p>
+        <p className="red bg-darken-4 error">
+          Todos los campos son obligatorios
+        </p>
       ) : null}
       <div className="input-field col s12">
         <input
@@ -66,11 +71,11 @@ const Formulario = () => {
       </div>
 
       <div className="input-field col s12">
-          <input 
-            type="submit"
-            className="waves-effect waves-ligth btn-large btn-block yellow accent-4"
-            value="Buscar Clima"
-          />
+        <input
+          type="submit"
+          className="waves-effect waves-ligth btn-large btn-block yellow accent-4"
+          value="Buscar Clima"
+        />
       </div>
     </form>
   );
